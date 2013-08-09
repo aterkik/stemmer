@@ -8,13 +8,14 @@ Usage
 =====
 
 >>> from stemmer import stemmer
->>> stemmer.stem('logically')
+>>> s = stemmer()
+>>> s.stem('logically')
 'logic'
->>> stemmer.stem('doing')
+>>> s.stem('doing')
 'do'
->>> stemmer.stem('acceptable')
+>>> s.stem('acceptable')
 'accept'
->>> stemmer.stemmed # returns the last stemmed word
+>>> s.stemmed # returns the last stemmed word
 'accept'
     
 License
