@@ -19,7 +19,7 @@ vc_data = { 'tr' : 0,
 			'esay' : 2,
 			'yclep' : 1,
 			'yyclep' : 2,
-			'lymoges' : 3 }
+			'lymoges' : 3}
 
 class StemmerTest(unittest.TestCase):
 	def testVCMeasure(self):
@@ -37,4 +37,5 @@ class StemmerTest(unittest.TestCase):
 			self.failUnless(s.stem(word) == stem, "Test failed for word \'%s\' stemmed to %s " \
 												  "should have been %s " % (word, s.stemmed, stem) )
 
-if __name__ == '__main__': unittest.main()
+if __name__ == '__main__':
+    unittest.main()
