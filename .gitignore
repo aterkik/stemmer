@@ -1,0 +1,14 @@
+# Ignore hidden files
+.*
+
+# Ignore Vim swap files
+*.swp 
+*.swo
+
+# Python stuff
+*.pyc
+*.pyo
+
+# But do track the .gitignore file
+!.gitignore
+
