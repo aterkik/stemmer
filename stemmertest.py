@@ -1,10 +1,12 @@
-import re, unittest
-from stemmer import stemmer
+""" Unit tests for Stemmer """
 
-vc_data = { 'tr' : 0,
+import unittest
+from stemmer import Stemmer
+
+VC_DATA = { 'tr' : 0,
 			'ee' : 0,
 			'tree' : 0,
-			'y' : 0, 
+			'y' : 0,
 			'by' : 0,
 			'trouble' : 1,
 			'oats' : 1,
@@ -22,20 +24,27 @@ vc_data = { 'tr' : 0,
 			'lymoges' : 3}
 
 class StemmerTest(unittest.TestCase):
-	def testVCMeasure(self):
-		s = stemmer()
-		for word, measure in vc_data.items():
-			self.failUnless(s.m(word) == measure, "Measure test failed for word '%s' calculated (%d)  \
-												   should have been (%d)" % (word, s.m(word), measure) )
-	
-	def testStem(self):	
-		s = stemmer()
-		output = file('output.txt')
-		for word in file('voc.txt'):
-			word = word.strip()
-			stem = output.next().strip()
-			self.failUnless(s.stem(word) == stem, "Test failed for word \'%s\' stemmed to %s " \
-												  "should have been %s " % (word, s.stemmed, stem) )
+    """ Main tester class. """
+    def test_VC_measure(self):
+        """ Tests the VC measure. """
+        stemmer = Stemmer()
+        for word, measure in VC_DATA.items():
+            self.failUnless(stemmer.m(word) == measure,
+                            "Measure test failed for word '%s' calculated (%d) \
+						    should have been (%d)" % (word, stemmer.m(word),
+                            measure))
+
+    def test_stem(self):
+        """ Checks the final stems. """
+        stemmer = Stemmer()
+        output = file('output.txt')
+        for word in file('voc.txt'):
+            word = word.strip()
+            stem = output.next().strip()
+            self.failUnless(stemmer.stem(word) == stem,
+                                        "Test failed for word \'%s\' stemmed "\
+                                        "to %s should have been %s"\
+                                        % (word, stemmer.stemmed, stem))
 
 if __name__ == '__main__':
     unittest.main()

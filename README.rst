@@ -7,8 +7,8 @@ Martin Porter's stemming algorithm implemented in pure Python
 Usage
 =====
 
->>> from stemmer import stemmer
->>> s = stemmer()
+>>> from stemmer import Stemmer
+>>> s = Stemmer()
 >>> s.stem('logically')
 'logic'
 >>> s.stem('doing')
