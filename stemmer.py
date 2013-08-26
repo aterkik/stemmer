@@ -5,25 +5,25 @@
     The implementation of Martin Porter's stemming (reducing words to
     their roots) algorithm [1].
 
-	Some improvements marked 'DEPARTURE' differ from the rules
-	described in the published paper.  However, these departures are
-	improvements and without them testing on the word samples [2]
-	would fail.
+    Some improvements marked 'DEPARTURE' differ from the rules
+    described in the published paper.  However, these departures are
+    improvements and without them testing on the word samples [2]
+    would fail.
 
-	This implementation stems only lower case strings; Words should be
-	forced to lower case before trying to stem them.
+    This implementation stems only lower case strings; Words should be
+    forced to lower case before trying to stem them.
 
-	[1] http://www.tartarus.org/~martin/PorterStemmer
-	[2] Input: http://www.tartarus.org/~martin/voc.txt
-		Corresponding output: http://www.tartarus.org/~martin/output.txt
+    [1] http://www.tartarus.org/~martin/PorterStemmer
+    [2] Input: http://www.tartarus.org/~martin/voc.txt
+        Corresponding output: http://www.tartarus.org/~martin/output.txt
 """
 
 import re
 class Stemmer(object):
     """ Test to count the number of VC counts where:
-		V - One more consecutive vowels
-		C - One or more consecutive consonants
-		Note: Y is considered a consonant if it's not preceded by a vowel.
+        V - One more consecutive vowels
+        C - One or more consecutive consonants
+        Note: Y is considered a consonant if it's not preceded by a vowel.
     """
     vc_count = re.compile(r'[y]?[^aeiouy]*[aeiouy][aeiou]*[^aeiou]'
                         '[^aeiouy]*').findall
@@ -35,8 +35,8 @@ class Stemmer(object):
     ends_cvc = re.compile(r'[^aeiou][aeiouy][^aeiouwxy]$').search
 
     # Suffices and their corresponding replacement for step 2.
-	# Indexed by the suffix's penultimate character for faster
-	# checking as described in the paper.
+    # Indexed by the suffix's penultimate character for faster
+    # checking as described in the paper.
     step2_suffix_tbl = {'a' : (
                                 ('ational', 'ate'),
                                 ('tional', 'tion')
@@ -79,74 +79,74 @@ class Stemmer(object):
                         'g' : (
                                 ('logi', 'log'),
                                 )
-						}
+                       }
 	# Suffices and their corresponding replacement for step 3.
     step3_suffix_tbl = {
                         't' : (
                                 ('icate', 'ic'),
                                 ('iciti', 'ic')
-							  ),
+                              ),
                         'v' : (
                                 ('ative', ''),
-							  ),
+                              ),
                         'z' : (
                                 ('alize', 'al'),
-							  ),
+                              ),
                         'a' : (
                                 ('ical', 'ic'),
-							  ),
+                              ),
                         'u' : (
                                 ('ful', ''),
-							  ),
+                              ),
                         's' : (
                                 ('ness', ''),
-							  )
-					   }
+                              )
+                       }
 	# Suffices and their corresponding replacement for step 4.
     step4_suffix_tbl = {
                         'a' : (
                                 ('al', ''),
-							  ),
+                              ),
                         'c' : (
                                 ('ance', ''),
                                 ('ence', ''),
-							  ),
+                              ),
                         'e' : (
                                 ('er', ''),
-							  ),
+                              ),
                         'i' : (
                                 ('ic', ''),
-							  ),
+                              ),
                         'l' : (
                                 ('able', ''),
                                 ('ible', '')
-							  ),
+                              ),
                         'n' : (
                                 ('ant', ''),
                                 ('ement', ''),
                                 ('ment', ''),
                                 ('ent', '')
-							  ),
+                              ),
                         'o' : (
                                 ('ou', ''),
-							  ),
+                              ),
                         's' : (
                                 ('ism', ''),
-							  ),
+                              ),
                         't' : (
                                 ('ate', ''),
                                 ('iti', '')
-							  ),
+                              ),
                         'u' : (
                                 ('ous', ''),
-							  ),
+                              ),
                         'v' : (
                                 ('ive', ''),
-							  ),
+                              ),
                         'z' : (
                                 ('ize', ''),
                               )
-					    }
+                        }
 
     def __init__(self):
         """Does some basic initialization."""
@@ -155,7 +155,7 @@ class Stemmer(object):
 
     def m(self, word):
         """Calculates and returns the given word's
-		VC measure.
+        VC measure.
         """
         return len(self.vc_count(word))
 
@@ -176,8 +176,9 @@ class Stemmer(object):
         return word
 
     def replace_end(self, suffix, rep, cond = True):
-        """ Replaces the stem's end to rep if the stem ends with
-        suffix."""
+        """Replaces the stem's end to rep if the stem ends with
+        suffix.
+        """
 
         applied = False
         if cond and self.stemmed.endswith(suffix):
@@ -186,8 +187,9 @@ class Stemmer(object):
         return applied
 
     def longest_match(self, word, tbl):
-        """ Finds and returns the word's longest matching suffix and its
-        corresponding replacement from a suffix table 'tbl'. """
+        """Finds and returns the word's longest matching suffix and its
+        corresponding replacement from a suffix table 'tbl'.
+        """
 
         longest_match = ('', '')
         # The suffices are grouped according to their next-to-last
@@ -208,7 +210,7 @@ class Stemmer(object):
         return longest_match
 
     def replace_ends_if(self, suffix_tbl, cond = True, m_thresh = 1):
-        """Strips the suffix of the stem according to the table given
+        """Strips out the suffix of the stem according to the table given
         if cond is True and the resulting stem has a greater VC measure
         than m_thresh.
         """
@@ -255,7 +257,7 @@ class Stemmer(object):
 
     def step1ab(self):
         """ Strips plurals and -ed or -ing.
-        e.g.
+        Examples:
            caresses  ->  caress
            ponies    ->  poni
            agreed    ->  agree
